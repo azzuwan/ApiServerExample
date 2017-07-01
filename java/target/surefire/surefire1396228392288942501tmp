@@ -1,0 +1,6 @@
+#surefire
+#Sun Jul 02 01:57:27 CST 2017
+maven.ext.class.path=/home/azzuwan/IDE/netbeans-8.2/java/maven-nblib/netbeans-eventspy.jar
+user.dir=/home/azzuwan/Development/Java/iSentia/SimpleApiServerExample
+localRepository=/home/azzuwan/.m2/repository
+basedir=/home/azzuwan/Development/Java/iSentia/SimpleApiServerExample
