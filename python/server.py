@@ -4,7 +4,7 @@ from services.articles import ArticleService
 article_service = ArticleService()
 
 def index(req):
-	return  req.Response(text='Yuhuuuu')
+	return  req.Response(text='You reached the index!')
 
 def articles(req):
 	docs = article_service.all()	
