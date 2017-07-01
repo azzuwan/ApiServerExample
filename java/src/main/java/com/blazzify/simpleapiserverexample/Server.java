@@ -25,13 +25,14 @@ import static spark.Spark.get;
 public class Server {
 
     public static void main(String[] args) {
-        String host = "mongodb://azzuwan:Reddoor74@aws-ap-southeast-1-portal.2.dblayer.com:15501,aws-ap-southeast-1-portal.0.dblayer.com:15501/news";
-        DB db = new MongoClient(host).getDB("dbname");
 
-        Jongo jongo = new Jongo(db);
-        MongoCollection articles = jongo.getCollection("articles");
         get("/", (req, res) -> "Hello World");
         get("/:name", (req, res) -> {
+            String host = "mongodb://azzuwan:Reddoor74@aws-ap-southeast-1-portal.2.dblayer.com:15501,aws-ap-southeast-1-portal.0.dblayer.com:15501/news";
+            DB db = new MongoClient(host).getDB("dbname");
+
+            Jongo jongo = new Jongo(db);
+            MongoCollection articles = jongo.getCollection("articles");
             MongoCursor<Article> all = articles.find("{}").as(Article.class);
             return json(all.iterator());
         });
