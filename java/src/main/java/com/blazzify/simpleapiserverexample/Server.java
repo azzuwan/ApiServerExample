@@ -7,16 +7,15 @@ package com.blazzify.simpleapiserverexample;
 
 import com.blazzify.simpleapiserverexample.models.Article;
 import com.google.gson.Gson;
-import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.jongo.Jongo;
-import org.jongo.MongoCollection;
-import org.jongo.MongoCursor;
+import org.bson.Document;
 import static spark.Spark.get;
 
 /**
@@ -26,16 +25,16 @@ import static spark.Spark.get;
 public class Server {
 
     public static void main(String[] args) {
-        String host = "mongodb://azzuwan:Reddoor74@aws-ap-southeast-1-portal.2.dblayer.com:15501,aws-ap-southeast-1-portal.0.dblayer.com:15501/news";
+        //String host = "mongodb://azzuwan:Reddoor74@aws-ap-southeast-1-portal.2.dblayer.com:15501,aws-ap-southeast-1-portal.0.dblayer.com:15501/admin";
+        String host = "mongodb://azzuwan:Reddoor74@aws-ap-southeast-1-portal.2.dblayer.com:15501/admin";
         MongoClientURI uri = new MongoClientURI(host);
-        DB db = new MongoClient(uri).getDB("news");
-        Jongo jongo = new Jongo(db);
+        MongoDatabase db = new MongoClient(uri).getDatabase("news");
+        MongoCollection<Document> articles = db.getCollection("articles");
         get("/", (req, res) -> "Hello World");
-        get("/:name", (req, res) -> {
-            MongoCollection articles = jongo.getCollection("articles");
-            MongoCursor<Article> all = articles.find().as(Article.class);
-            Article a = all.next();
-            return a.getTitle();
+        get("/:name", (req, res) -> {            
+            MongoCursor<Document> all = articles.find().iterator();
+            Document a = all.next();
+            return a.get("title");
         });
     }
 
