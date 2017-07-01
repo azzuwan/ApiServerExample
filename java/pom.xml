@@ -3,6 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.blazzify</groupId>
     <artifactId>SimpleApiServerExample</artifactId>
+    <name>server</name>
     <version>1.0</version>
     <packaging>jar</packaging>
     <dependencies>
@@ -35,4 +36,20 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.blazzify.simpleapiserverexample.Server</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
 </project>
