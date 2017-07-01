@@ -9,6 +9,7 @@ import com.blazzify.simpleapiserverexample.models.Article;
 import com.google.gson.Gson;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -25,22 +26,25 @@ import static spark.Spark.get;
 public class Server {
 
     public static void main(String[] args) {
-
+        String host = "mongodb://azzuwan:Reddoor74@aws-ap-southeast-1-portal.2.dblayer.com:15501,aws-ap-southeast-1-portal.0.dblayer.com:15501/news";
+        MongoClientURI uri = new MongoClientURI(host);
+        DB db = new MongoClient(uri).getDB("news");
+        Jongo jongo = new Jongo(db);
         get("/", (req, res) -> "Hello World");
         get("/:name", (req, res) -> {
-            String host = "mongodb://azzuwan:Reddoor74@aws-ap-southeast-1-portal.2.dblayer.com:15501,aws-ap-southeast-1-portal.0.dblayer.com:15501/news";
-            DB db = new MongoClient(host).getDB("dbname");
-
-            Jongo jongo = new Jongo(db);
             MongoCollection articles = jongo.getCollection("articles");
-            MongoCursor<Article> all = articles.find("{}").as(Article.class);
-            return json(all.iterator());
+            MongoCursor<Article> all = articles.find().as(Article.class);
+            Article a = all.next();
+            return a.getTitle();
         });
     }
 
     public static String json(Iterator<Article> iterator) {
         List<Article> articles = new ArrayList<>();
         iterator.forEachRemaining(articles::add);
+        System.out.println("XXXXX: " + articles.get(0).getTitle());
+        String out = new Gson().toJson(articles);
+        System.out.println("BBBBBBBBBBB: " + out);
         return new Gson().toJson(articles);
     }
 
