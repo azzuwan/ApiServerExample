@@ -6,16 +6,14 @@
 package com.blazzify.simpleapiserverexample.models;
 
 import java.util.Date;
-import org.jongo.marshall.jackson.oid.MongoId;
-import org.jongo.marshall.jackson.oid.ObjectId;
+
 
 /**
  *
  * @author Azzuwan Aziz <azzuwan@gmail.com>
  */
-public class Article {
-    @MongoId
-    private ObjectId id;
+public class Article {    
+    private String id;
     private String url;
     private String title;
     private String author;
@@ -26,7 +24,7 @@ public class Article {
     public Article() {
     }
 
-    public Article(ObjectId id, String url, String title, String author, String body, Date published, String agency) {
+    public Article(String id, String url, String title, String author, String body, Date published, String agency) {
         this.id = id;
         this.url = url;
         this.title = title;
@@ -86,11 +84,11 @@ public class Article {
         this.agency = agency;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 }
