@@ -47,9 +47,11 @@ public class Server {
         JsonArray array = new JsonArray();
         while (cursor.hasNext()) {
             Document doc = cursor.next();
+            System.out.println("AAAAAAA: " + doc.toJson());
             JsonElement obj = parser.parse(doc.toJson());
             array.add(obj);
         }
+        System.out.println("ARRAY LENGTH: " + array.size());
         return array.getAsString();
     }
 }
