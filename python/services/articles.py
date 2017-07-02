@@ -7,6 +7,6 @@ class ArticleService(object):
 	def by_id(self, id):		
 		return Articles.objects(id=id)
 	
-	def keyword(self, keyword):
+	def keywords(self, keyword):
 		return Articles.objects.search_text(keyword).order_by('$text_score')		
 		
