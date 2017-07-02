@@ -36,6 +36,7 @@ public class Server {
         MongoCollection<Document> articles = db.getCollection("articles");
         get("/", (req, res) -> "Hello World");
         get("/articles/:keyword", (req, res) -> {
+            res.type("application/json");
             String keyword = req.params(":keyword");
             MongoCursor<Document> all = articles.find(Filters.text(keyword)).iterator();
             return json(all);
