@@ -42,16 +42,18 @@ public class Server {
         });
     }
 
-    public static String json(MongoCursor<Document> cursor) {
-        JsonParser parser = new JsonParser();
-        JsonArray array = new JsonArray();
+    public static String json(MongoCursor<Document> cursor) {        
+        boolean first = true;
+        String data = "[";
         while (cursor.hasNext()) {
-            Document doc = cursor.next();
-            System.out.println("AAAAAAA: " + doc.toJson());
-            JsonElement obj = parser.parse(doc.toJson());
-            array.add(obj);
+            if(!first){
+                data += ",";
+            }
+            Document doc = cursor.next();            
+            data += doc.toJson();
+            first = false;
         }
-        System.out.println("ARRAY LENGTH: " + array.size());
-        return array.getAsString();
+        data += "]";        
+        return data;
     }
 }
